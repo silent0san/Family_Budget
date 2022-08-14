@@ -1,0 +1,33 @@
+{% extends "budget_app/base.html" %}
+
+{% block title %}Budgets List{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    {% if users_budgets %}
+        <table class="table table-striped table-hover">
+            <tr>
+                <th>Budget Name</th>
+                <th>Total value</th>
+                <th></th>
+                <th></th>
+            </tr>
+            {% for budget in users_budgets %}
+                <tr>
+                    <td><a href="{% url 'update-budget' budget.id %}">{{budget.name}}</a></td>
+                    <td>{{budget.total_value}}</td>
+                    <td align="left">
+                       <a href="{% url 'budget-records' budget.id %}" class="btn btn-warning btn-sm">
+                            Records
+                       </a>
+                    </td>
+                    <td align="left">
+                       Share
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        No meetings!
+    {% endif %}
+{% endblock %}

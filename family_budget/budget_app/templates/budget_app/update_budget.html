@@ -1,0 +1,16 @@
+{% extends "budget_app/base.html" %}
+
+{% block title %}Update Budget{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    Update Budget:
+    <form aciton="" method="POST">
+         {% csrf_token %}
+         {{ budget_form.as_p }}
+         <input type="submit" value="Change name"
+                class="btn btn-secondary">
+    </form>
+
+{% endblock %}

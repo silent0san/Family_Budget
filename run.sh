@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 yes | python manage.py makemigrations
 python manage.py migrate

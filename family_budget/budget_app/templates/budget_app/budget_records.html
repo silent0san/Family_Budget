@@ -24,8 +24,8 @@
                 <tr>
                     <td>{{record.name}}</td>
                     <td>{{record.value}}</td>
-                    <td></td>
-                   <td align="left">
+                    <td>{{record.category}}</td>
+                    <td align="left">
                         <a href="{% url 'delete-record' record.id %}" class="btn btn-danger btn-sm">
                             Delete</a>
                     </td>

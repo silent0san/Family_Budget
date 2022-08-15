@@ -13,7 +13,7 @@ def home(request):
 @login_required(login_url='/login')
 def add_budget(request):
     submitted = False
-    current_logged_user = User.objects.get()
+    current_logged_user = request.user
     if request.method == "POST":
         form = BudgetForm(request.POST)
         if form.is_valid():
@@ -31,11 +31,15 @@ def add_budget(request):
 
 @login_required(login_url='/login')
 def budgets_list(request):
-    current_logged_user = User.objects.get()
+    current_logged_user = request.user
     users_budgets = Budget.objects.order_by('created_date').filter(owner=current_logged_user)
 
+    shared_budgets = Budget.objects.all().filter(shared_with=current_logged_user)
+
+    all_budgets = shared_budgets | users_budgets
+
     return render(request, 'budget_app/budgets_list.html', {"current_logged_user": current_logged_user,
-                                                            "users_budgets": users_budgets})
+                                                            "all_budgets": all_budgets})
 
 
 @login_required(login_url='/login')
@@ -62,7 +66,10 @@ def budget_records(request, budget_id):
         if record_form.is_valid():
             saved_form_data = record_form.save(commit=False)
             saved_form_data.budget = budget
-            record_form.save()
+
+            saved_form_data.categorize
+
+            saved_form_data.save()
 
             budget.total_value += saved_form_data.value
             budget.save()
@@ -89,3 +96,38 @@ def delete_record(request, record_id):
     budget.save()
 
     return redirect('/budget_records/' + budget_id)
+
+
+@login_required(login_url='/login')
+def share_budget(request, budget_id):
+    budget = Budget.objects.get(pk=budget_id)
+
+    # Users that share budget with owner
+    budget_shared_with = budget.shared_with.all()
+
+    # All users created in system (without currently logged user)
+    all_users = User.objects.all().exclude(id=request.user.id)
+
+    return render(request, 'budget_app/share_budget.html', {'budget': budget,
+                                                            'all_users': all_users,
+                                                            'budget_shared_with': budget_shared_with})
+
+
+@login_required(login_url='/login')
+def share_budget_user(request, budget_id, user_id):
+    if request.method == "POST":
+        budget = Budget.objects.get(pk=budget_id)
+        user = User.objects.get(pk=user_id)
+        budget.shared_with.add(user)
+
+    return redirect('/share_budget/' + str(budget.id))
+
+
+@login_required(login_url='/login')
+def delete_shared_user(request, budget_id, user_id):
+    if request.method == "POST":
+        budget = Budget.objects.get(pk=budget_id)
+        user = User.objects.get(pk=user_id)
+        budget.shared_with.remove(user)
+
+    return redirect('/share_budget/' + str(budget.id))

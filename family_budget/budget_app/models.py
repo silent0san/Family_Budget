@@ -21,3 +21,11 @@ class BudgetRecord(models.Model):
     value = models.DecimalField(max_digits=9, decimal_places=2, blank=False, null=False)
     created_date = models.DateTimeField(default=now, editable=False)
     budget = models.ForeignKey(Budget, on_delete=models.CASCADE)
+    category = models.CharField('Category', blank=False, max_length=30, default='uncategorized')
+
+    @property
+    def categorize(self):
+        if self.value > 0:
+            self.category = "income"
+        else:
+            self.category = "expanse"

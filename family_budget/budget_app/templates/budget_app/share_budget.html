@@ -1,0 +1,42 @@
+{% extends "budget_app/base.html" %}
+
+{% block title %}Share Budget{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+Share budget!
+<br>
+</br>
+
+{% if all_users %}
+    <table class="table table-striped table-hover">
+        <tr>
+            <th>User name</th>
+            <th></th>
+        </tr>
+        {% for user in all_users %}
+        <tr>
+            <td>{{ user }}</td>
+            {% if user in budget_shared_with %}
+            <td>
+                <form action="{% url 'delete-shared-user' budget.id user.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" class="btn btn-danger" value="Delete" name="delete_budget_user">
+                </form>
+            </td>
+            {% else %}
+            <td>
+                <form action="{% url 'share-budget-user' budget.id user.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" class="btn btn-success" value="Share" name="share_budget_user">
+                </form>
+            </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+No other users created!
+{% endif %}
+{% endblock %}

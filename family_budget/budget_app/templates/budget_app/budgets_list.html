@@ -4,7 +4,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    {% if users_budgets %}
+    {% if all_budgets %}
         <table class="table table-striped table-hover">
             <tr>
                 <th>Budget Name</th>
@@ -12,18 +12,28 @@
                 <th></th>
                 <th></th>
             </tr>
-            {% for budget in users_budgets %}
+            {% for budget in all_budgets %}
                 <tr>
+                    {% if user == budget.owner %}
                     <td><a href="{% url 'update-budget' budget.id %}">{{budget.name}}</a></td>
+                    {% else %}
+                    <td>{{budget.name}}</td>
+                    {% endif %}
                     <td>{{budget.total_value}}</td>
                     <td align="left">
                        <a href="{% url 'budget-records' budget.id %}" class="btn btn-warning btn-sm">
                             Records
                        </a>
                     </td>
+                    {% if user == budget.owner %}
                     <td align="left">
-                       Share
+                       <a href="{% url 'share-budget' budget.id %}" class="btn btn-primary btn-sm">
+                            Share
+                       </a>
                     </td>
+                    {% else %}
+                    <td></td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </table>

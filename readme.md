@@ -20,7 +20,7 @@ In order to run this app use **bash script** in root project directory:
 
 Please use http://localhost:8000/ with your browser to see frontend.
 
-In order to use API please use http://localhost:8000/api/<path>.
+In order to use API please use http://localhost:8000/api/{path}
 
 
 

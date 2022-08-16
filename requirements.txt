@@ -3,3 +3,5 @@ psycopg2-binary==2.9.3
 requests==2.27.1
 django-filter
 crispy-bootstrap5
+djangorestframework
+flake8

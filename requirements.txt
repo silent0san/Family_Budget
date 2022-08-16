@@ -5,3 +5,4 @@ django-filter
 crispy-bootstrap5
 djangorestframework
 flake8
+pytest-django

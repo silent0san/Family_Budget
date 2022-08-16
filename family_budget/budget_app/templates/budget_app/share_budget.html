@@ -22,7 +22,7 @@ Share budget!
             <td>
                 <form action="{% url 'delete-shared-user' budget.id user.id %}" method="post">
                     {% csrf_token %}
-                    <input type="submit" class="btn btn-danger" value="Delete" name="delete_budget_user">
+                    <input type="submit" class="btn btn-danger " value="Delete" name="delete_budget_user">
                 </form>
             </td>
             {% else %}

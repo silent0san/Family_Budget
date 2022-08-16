@@ -11,6 +11,7 @@
                 <th>Total value</th>
                 <th></th>
                 <th></th>
+                <th></th>
             </tr>
             {% for budget in all_budgets %}
                 <tr>
@@ -31,7 +32,13 @@
                             Share
                        </a>
                     </td>
+                    <td align="left">
+                       <a href="{% url 'delete-budget' budget.id %}" class="btn btn-danger btn-sm">
+                            Delete
+                       </a>
+                    </td>
                     {% else %}
+                    <td></td>
                     <td></td>
                     {% endif %}
                 </tr>

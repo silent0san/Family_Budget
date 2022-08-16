@@ -26,6 +26,6 @@ class BudgetRecord(models.Model):
     @property
     def categorize(self):
         if self.value > 0:
-            self.category = "income"
+            self.category = "Income"
         else:
-            self.category = "expanse"
+            self.category = "Expanse"

@@ -12,6 +12,7 @@ services:
     family_budget_backend:
         image: fb_backend
         build: .
+        command: ${DOCKER_CMD}
         volumes:
             - .:/code
         ports:

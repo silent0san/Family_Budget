@@ -8,4 +8,10 @@ case $1 in
 "--delete" | "-d" )
   docker-compose -f docker-compose.yml down --rmi local
   ;;
+
+"--test" | "-t" )
+  export DOCKER_CMD="pytest"
+  docker-compose -f docker-compose.yml up --build
+  docker-compose -f docker-compose.yml down --rmi local
+  ;;
 esac

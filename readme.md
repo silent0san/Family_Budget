@@ -1,4 +1,4 @@
-# Budget App TIVIX APP
+# Budget App
 
 ## About app
 This app is using:
